@@ -1,0 +1,7 @@
+#
+#admin:
+#  url: http://localhost:8081/xxl-job-admin
+#  username: admin
+#  password: 123456
+#  appName: xxl-job-executor-sample
+#  title: 示例执行器
