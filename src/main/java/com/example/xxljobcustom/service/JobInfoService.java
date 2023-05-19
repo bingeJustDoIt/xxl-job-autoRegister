@@ -86,6 +86,7 @@ public class JobInfoService {
         Integer code = body.get("code").getAsInt();
         if (code.equals(200)){
             log.info("startJob:{} success",id);
+            return;
         }
         throw new RuntimeException("startJob jobInfo error!");
     }

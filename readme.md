@@ -4,8 +4,9 @@
 示例：
 只需要同时使用原生@XxlJob注解，加上自定义的@XxlRegister注解，即可自动将此任务有关信息注册到xxl-job管理中心，
 当然，使用方还需要添加有关信息
-
-1. 引入依赖
+# 使用步骤
+0. 将本项目打包并install：  mvn clean install -DskipTests
+1. 客户端引入依赖
 ```xml
      <dependency>
             <groupId>com.example</groupId>
@@ -14,7 +15,7 @@
      </dependency>
 ```
 
-2. 配置
+2. 客户端配置
 ```yaml
 # Xxl-job 配置
 xxl:
@@ -30,7 +31,7 @@ xxl:
     executor:
       # 本实例对应的执行器AppName 用于多实例部署
       appName: xxl-test-executor
-      # 本实例对应的执行器Title 区分本实例和其他实例 建议加上本实例的端口以进行区分
+      # 本实例对应的执行器Title 区分本实例和其他实例
       title: 示例执行器
 
 ```
