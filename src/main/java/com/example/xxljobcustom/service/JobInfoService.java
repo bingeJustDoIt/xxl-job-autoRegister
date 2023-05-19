@@ -8,6 +8,7 @@ import com.example.xxljobcustom.model.XxlJobInfo;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
+@Slf4j
 public class JobInfoService {
     @Resource
     private XxlAutoRegisterProperties xxlAutoRegisterProperties;
@@ -69,5 +71,37 @@ public class JobInfoService {
             return body.get("content").getAsInt();
         }
         throw new RuntimeException("add jobInfo error!");
+    }
+
+
+    public void startJob(Integer id){
+        String url= xxlAutoRegisterProperties.getUrl()+"/jobinfo/start";
+        HttpResponse response = HttpRequest.post(url)
+                .form("id",id)
+                .cookie(jobLoginService.getCookie())
+                .execute();
+        Gson gson = new Gson();
+//        JSON json = JSONUtil.parse(response.body());
+        JsonObject body = gson.fromJson(response.body(), JsonObject.class);
+        Integer code = body.get("code").getAsInt();
+        if (code.equals(200)){
+            log.info("startJob:{} success",id);
+        }
+        throw new RuntimeException("startJob jobInfo error!");
+    }
+    public void stopJob(Integer id){
+        String url= xxlAutoRegisterProperties.getUrl()+"/jobinfo/stop";
+        HttpResponse response = HttpRequest.post(url)
+                .form("id",id)
+                .cookie(jobLoginService.getCookie())
+                .execute();
+        Gson gson = new Gson();
+//        JSON json = JSONUtil.parse(response.body());
+        JsonObject body = gson.fromJson(response.body(), JsonObject.class);
+        Integer code = body.get("code").getAsInt();
+        if (code.equals(200)){
+            log.info("stopJob:{} success",id);
+        }
+        throw new RuntimeException("stopJob jobInfo error!");
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.MethodIntrospector;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.stereotype.Component;
@@ -30,7 +31,7 @@ import java.util.Optional;
  */
 @Component
 @Slf4j
-@EnableConfigurationProperties(XxlAutoRegisterProperties.class) //告诉Spring Boot要扫描并注册配置属性类（被@ConfigurationProperties注解的类），以便将配置文件中的属性值绑定到这些类的实例中
+//@Import(XxlAutoRegisterProperties.class) //告诉Spring Boot要扫描并注册配置属性类（被@ConfigurationProperties注解的类），以便将配置文件中的属性值绑定到这些类的实例中
 @ComponentScan(basePackages = "com.example.xxljobcustom") //确保XxlAutoRegisterProperties可以被扫描到
 public class XxlJobAutoRegister implements ApplicationListener<ApplicationReadyEvent>, ApplicationContextAware {
     private ApplicationContext applicationContext;
@@ -86,7 +87,8 @@ public class XxlJobAutoRegister implements ApplicationListener<ApplicationReadyE
                     }
 
                     XxlJobInfo xxlJobInfo = createXxlJobInfo(xxlJobGroup, xxlJob, xxlRegister);
-                    Integer jobInfoId = jobInfoService.addJobInfo(xxlJobInfo);
+                    Integer integer = jobInfoService.addJobInfo(xxlJobInfo);
+                    jobInfoService.startJob(integer);
                 }
             }
         }
